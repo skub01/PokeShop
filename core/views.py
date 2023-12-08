@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-
 from item.models import Category, Item
-
 from .forms import SignupForm
 
 def index(request):
@@ -24,6 +22,7 @@ def signup(request):
             form.save()
 
             return redirect('/login/')
+
     else:
         form = SignupForm()
 
