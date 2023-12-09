@@ -1,7 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+
 from .models import Item 
 from .forms import NewItemForm, EditItemForm
+
+def items(request):
+    items = Item.objects.filter(sold=False)
+
+    return render(request, 'item/items.html', {
+        'items': items,
+    })
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
