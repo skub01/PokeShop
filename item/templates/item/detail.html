@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="grid grid-cols-5 gap-6">
-    <div class="col-span-3">
+    <div class="col-span-3 flex justify-center">
         <img src="{{ item_data.image }}" class="rounded-xl">
     </div>
 
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
         <h1 class="mb-3 text-2xl font-bold">{{ item_data.name }}</h1>
-        <h2 class="mb-10 text-xl">{{ item_data.series }}</h2>
+        <h2 class="mb-10 text-xl">Generation: {{ item_data.series }}</h2>
         {% if item_data.text %}
             <h2 class="text-lg">Pokedex entry:</h2>
             <p class="mb-10">{{ item_data.text }}</p>
