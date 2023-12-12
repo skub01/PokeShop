@@ -1,33 +1,38 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{{ item.name }}{% endblock %}
+{% block title %}{{ item_data.name }}{% endblock %}
 
 {% block content %}
 <div class="grid grid-cols-5 gap-6">
     <div class="col-span-3">
-        <img src="{{ item.image.url }}" class="rounded-xl">
+        <img src="{{ item_data.image }}" class="rounded-xl">
     </div>
 
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3hl">{{ item.name }}</h1>
-        <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by }}</p>
+        <h1 class="mb-3 text-2xl font-bold">{{ item_data.name }}</h1>
+        <h2 class="mb-10 text-xl">{{ item_data.series }}</h2>
+        {% if item_data.text %}
+            <h2 class="text-lg">Pokedex entry:</h2>
+            <p class="mb-10">{{ item_data.text }}</p>
+        {% endif %}    
+        <p class="text-gray-500"><strong>Price: </strong>${{ item_data.price }}</p>
+        <p class="text-gray-500"><strong>Seller: </strong>{{ item_data.created_by }}</p>
 
         {% if item.description %}
             <p class="text-gray-700">
                 <strong class="text-gray-500">Description: </strong><br>
-                {{ item.description }}
+                
             </p>
         {% endif %}
 
         {% if request.user == item.created_by %}
             <div class="mt-6 p-6 bg-white rounded-xl">
               <p>This is your item.</p>
-              <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit Listing</a>
-              <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete Item</a>
+              <a href="{% url 'item:edit' item_data.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit Listing</a>
+              <a href="{% url 'item:delete' item_data.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete Item</a>
             </div>
         {% else %}
-            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact Seller</a>
+            <a href="{% url 'conversation:new' item_data.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact Seller</a>
         {% endif %}
       </div>
 </div>
@@ -38,14 +43,14 @@
     <div class="grid grid-cols-3 gap-3">
       {% for item in related_items %}
       <div>
-        <a href="{% url 'item:detail' item.id %}">
+        <a href="{% url 'item:detail' item_data.id %}">
           <div>
-            <img src="{{ item.image.url }}" class="rounded-t-xl" />
+            <img src="{{ item_data.image }}" class="rounded-t-xl" />
           </div>
   
           <div class="p-6 bg-white rounded-b-xl">
-            <h2 class="text-2xl">{{ item.name }}</h2>
-            <p class="text-gray-500">Price: {{ item.price }}</p>
+            <h2 class="text-2xl">{{ item_data.name }}</h2>
+            <p class="text-gray-500">Price: {{ item_data.price }}</p>
           </div>
         </a>
       </div>
