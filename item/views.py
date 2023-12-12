@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import requests
 from .models import Item, Category
 from .forms import NewItemForm, EditItemForm
@@ -33,7 +34,19 @@ def items(request):
 
             items_data.append(item_info)
 
-        return render(request, 'item/items.html', {'items_data': items_data})
+        paginator = Paginator(items_data, 15)  # Show 15 items per page
+        page = request.GET.get('page')
+
+        try:
+            items_data = paginator.page(page)
+        except PageNotAnInteger:
+            # If the page parameter is not an integer, deliver the first page.
+            items_data = paginator.page(1)
+        except EmptyPage:
+            # If the page is out of range (e.g., 9999), deliver the last page.
+            items_data = paginator.page(paginator.num_pages)
+
+        return render(request, 'item/items.html', {'items_data': items_data, 'paginator': paginator})
     else:
         return render(request, 'item/items.html', {'error_message': 'Failed to fetch data from the API'})
 

@@ -47,7 +47,25 @@
                 </div>
                 {% endfor %}
               </div>
-        </div>
 
+              <div class="mt-6 flex justify-center pagination">
+                <span class="step-links">
+                    {% if items_data.has_previous %}
+                        <a href="?page=1" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">&laquo; first</a>
+                        <a href="?page={{ items_data.previous_page_number }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">previous</a>
+                    {% endif %}
+        
+                    <span class="current">
+                       <strong> Page {{ items_data.number }} of {{ items_data.paginator.num_pages }} </strong>
+                    </span>
+        
+                    {% if items_data.has_next %}
+                        <a href="?page={{ items_data.next_page_number }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">next</a>
+                        <a href="?page={{ items_data.paginator.num_pages }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        </div>
     </div>
 {% endblock %}
