@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
+import requests
 from .models import Item, Category
 from .forms import NewItemForm, EditItemForm
 
@@ -10,19 +10,32 @@ def items(request):
     categories = Category.objects.all()
     category_id = request.GET.get('category', 0)
     items = Item.objects.filter(sold=False)
+    api_url = "https://api.pokemontcg.io/v2/cards"
 
-    if category_id:
-        items = items.filter(category_id=category_id)
+    response = requests.get(api_url)
 
-    if query:
-        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    if response.status_code == 200:
+        data_list = response.json().get("data", [])
 
-    return render(request, 'item/items.html', {
-        'items': items,
-        'query': query,
-        'categories': categories,
-        'category_id': int(category_id),
-    })
+        items_data = []
+        for item_data in data_list:
+            name = item_data.get("name", "")
+            image = item_data.get("images", {}).get("small", "")
+            average_sell_price = item_data.get("cardmarket", {}).get("prices", {}).get("averageSellPrice", 0)
+            series = item_data.get("set", {}).get("series", "")
+
+            item_info = {
+                'name': name,
+                'image': image,
+                'average_sell_price': average_sell_price,
+                'series': series
+            }
+
+            items_data.append(item_info)
+
+        return render(request, 'item/items.html', {'items_data': items_data})
+    else:
+        return render(request, 'item/items.html', {'error_message': 'Failed to fetch data from the API'})
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
