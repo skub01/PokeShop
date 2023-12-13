@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import requests
+import random
 from .models import Item, Category
 from .forms import NewItemForm, EditItemForm
 
@@ -36,7 +37,7 @@ def items(request):
 
             items_data.append(item_info)
 
-        paginator = Paginator(items_data, 15)  
+        paginator = Paginator(items_data, 9)  
         page = request.GET.get('page')
 
         try:
@@ -55,30 +56,51 @@ def detail(request, item_id):
     response = requests.get(api_url)
 
     if response.status_code == 200:
-        data = response.json().get("data", {})
+        data_detail = response.json().get("data", {})
 
-        name = data.get("name", "")
-        id = data.get("id", "")
-        image = data.get("images", {}).get("small", "")
-        series = data.get("set", {}).get("series", "")
-        price = data.get("cardmarket", {}).get("prices", {}).get("averageSellPrice", 0)
-        text = data.get("flavorText", "")
+        name = data_detail.get("name", "")
+        id_detail = data_detail.get("id", "")
+        image = data_detail.get("images", {}).get("small", "")
+        series = data_detail.get("set", {}).get("series", "")
+        price = data_detail.get("cardmarket", {}).get("prices", {}).get("averageSellPrice", 0)
+        text = data_detail.get("flavorText", "")
         
         item_data = {
             'name': name,
-            'id': id,
+            'id': id_detail,
             'image': image,
             'series': series,
             'price': price,
             'text': text
         }
 
-        return render(request, 'item/detail.html', {
-            'item_data': item_data,
-           })
+        api_url_related_items = f"https://api.pokemontcg.io/v2/cards?q=set.series:{series}&pageSize=4"
+        response_related_items = requests.get(api_url_related_items)
+
+        if response_related_items.status_code == 200:
+            data_related_items = response_related_items.json().get("data", [])
+
+            related_items = [related_item for related_item in data_related_items if related_item.get("id") != id_detail]
+
+            random.shuffle(related_items)
+            related_items_info = [
+                {
+                    'name': related_item.get("name", ""),
+                    'id': related_item.get("id", ""),
+                    'price': related_item.get("cardmarket", {}).get("prices", {}).get("averageSellPrice", 0),
+                    'image': related_item.get("images", {}).get("small", "")
+                }
+                for related_item in related_items[:min(3, len(related_items))]
+            ]
+
+            return render(request, 'item/detail.html', {
+                'item_data': item_data,
+                'related_items': related_items_info,
+            })
+        else:
+            return render(request, 'item/detail.html', {'error_message': 'Couldn\'t fetch related items from the API'})
     else:
-        return render(request, 'item/detail.html', {'error_message': 'Failed to fetch data from the API'})
- 
+        return render(request, 'item/detail.html', {'error_message': 'Couldn\'t fetch detail item from the API'})
 
 @login_required
 def new(request):
