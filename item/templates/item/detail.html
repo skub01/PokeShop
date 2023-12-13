@@ -15,15 +15,10 @@
             <h2 class="text-lg">Pokedex entry:</h2>
             <p class="mb-10">{{ item_data.text }}</p>
         {% endif %}    
-        <p class="text-gray-500"><strong>Price: </strong>${{ item_data.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ item_data.created_by }}</p>
-
-        {% if item.description %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Description: </strong><br>
-                
-            </p>
-        {% endif %}
+        {% with rarity_info=item_data.rarity_info %}
+            <p class="{{ rarity_info.style }}">{{ rarity_info.symbol }} {{ item_data.rarity }}</p>
+        {% endwith %}
+        <p class="text-gray-500"><strong>Price: </strong>${{ item_data.price|floatformat:2 }}</p>
 
         {% if request.user == item.created_by %}
             <div class="mt-6 p-6 bg-white rounded-xl">

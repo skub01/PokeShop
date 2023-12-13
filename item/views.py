@@ -62,6 +62,7 @@ def detail(request, item_id):
         id_detail = data_detail.get("id", "")
         image = data_detail.get("images", {}).get("small", "")
         series = data_detail.get("set", {}).get("series", "")
+        rarity = data_detail.get("rarity", "")
         price = data_detail.get("cardmarket", {}).get("prices", {}).get("averageSellPrice", 0)
         text = data_detail.get("flavorText", "")
         
@@ -70,9 +71,21 @@ def detail(request, item_id):
             'id': id_detail,
             'image': image,
             'series': series,
+            'rarity': rarity,
             'price': price,
             'text': text
         }
+        
+        rarity_info = {
+            'Rare Holo': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+            'Rare Holo GX': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+            'Rare Holo V': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+            'Rare': {'style': 'text-red-500 font-bold', 'symbol': '★'},
+            'Common': {'style': 'text-gray-500 font-bold', 'symbol': '○'},
+            'Uncommon': {'style': 'text-blue-500 font-bold', 'symbol': '☆'},
+}
+
+        item_data['rarity_info'] = rarity_info.get(item_data['rarity'], {'style': 'font-bold', 'symbol': ''}) 
 
         api_url_related_items = f"https://api.pokemontcg.io/v2/cards?q=set.series:{series}&pageSize=4"
         response_related_items = requests.get(api_url_related_items)
