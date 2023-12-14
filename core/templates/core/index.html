@@ -7,7 +7,7 @@
 
   <div class="grid grid-cols-3 gap-3">
     {% for item in items %}
-    <div>
+    <div class="flex justify-center mb-5">
       <a href="{% url 'item:detail' item.id %}">
         <div>
           <img src="{{ item.image }}" class="rounded-t-xl" />
