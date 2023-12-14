@@ -1,6 +1,6 @@
 {% extends 'core/base.html'%} 
 
-{% block title %}Browse items{% endblock %}
+{% block title %}Items{% endblock %}
 
 {% block content %}
     <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
@@ -31,41 +31,23 @@
         </div>
 
         <div class="col-span-3">
-            <div class="grid grid-cols-3 gap-10">
-                {% for item_data in items_data %}
-                <div class="flex justify-center">
-                  <a href="{% url 'item:detail' item_data.id %}">
+            <div class="grid grid-cols-3 gap-3">
+                {% for item in items %}
+                <div>
+                  <a href="{% url 'item:detail' item.id %}">
                     <div>
-                      <img src="{{ item_data.image }}" class="rounded-t-xl" />
+                      <img src="{{ item.image.url }}" class="rounded-t-xl" />
                     </div>
             
                     <div class="p-6 bg-white rounded-b-xl">
-                      <h2 class="text-2xl">{{ item_data.name }}</h2>
-                      <p class="text-bold text-gray-500">${{ item_data.average_sell_price }}</p>
+                      <h2 class="text-2xl">{{ item.name }}</h2>
+                      <p class="text-gray-500">Price: {{ item.price }}</p>
                     </div>
                   </a>
                 </div>
                 {% endfor %}
               </div>
+        </div>
 
-              <div class="mt-6 flex justify-center pagination">
-                <span class="step-links">
-                    {% if items_data.has_previous %}
-                        <a href="?page=1" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">&laquo; first</a>
-                        <a href="?page={{ items_data.previous_page_number }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">previous</a>
-                    {% endif %}
-        
-                    <span class="current">
-                       <strong> Page {{ items_data.number }} of {{ items_data.paginator.num_pages }} </strong>
-                    </span>
-        
-                    {% if items_data.has_next %}
-                        <a href="?page={{ items_data.next_page_number }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">next</a>
-                        <a href="?page={{ items_data.paginator.num_pages }}" class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
-        </div>
-        </div>
     </div>
 {% endblock %}
