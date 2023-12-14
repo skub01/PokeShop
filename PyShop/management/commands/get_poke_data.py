@@ -19,7 +19,7 @@ class Command(BaseCommand):
                     data_list = response.json().get("data", [])
 
                 if not data_list:
-                    break  # No more items to fetch
+                    break 
 
                 for item_data in data_list:
                     name = item_data.get("name", "")
@@ -29,10 +29,8 @@ class Command(BaseCommand):
                     series = item_data.get("set", {}).get("series", "")
                     category_name = item_data.get("rarity", "")
 
-                    # Get or create the category
                     category_instance, created = Category.objects.get_or_create(name=category_name)
 
-                    # Create the item
                     Item.objects.create(
                         name=name,
                         image=image,
@@ -42,11 +40,10 @@ class Command(BaseCommand):
                         category=category_instance,
                     )
 
-                # Check if there is a next page
                 next_page = response.json().get("meta", {}).get("page", {}).get("next", None)
 
                 if not next_page:
-                    break  # No more pages
+                    break 
 
                 page += 1
             else:
