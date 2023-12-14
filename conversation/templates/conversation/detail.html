@@ -3,7 +3,7 @@
 {% block title %}Messages{% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-3xl">Your messages{{ message.created_by.username }} </h1>
+<h1 class="mb-6 text-3xl">Your conversation with {{ other_user.username }} || {{conversation.item}}</h1>
 
 <div class="space-y-6">
     {% for message in conversation.messages.all %}
@@ -23,4 +23,7 @@
 
     <button class="py-4 px-8 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">Send message</button>
 </form>
+    <a href="{% url 'item:detail' conversation.item.id %}">
+        <button class="py-4 px-8 text-lg bg-red-700 hover:bg-red-800 rounded-xl text-white">Back</button>
+    </a>
 {% endblock %}

@@ -12,6 +12,9 @@ class Conversation(models.Model):
     class Meta:
         ordering = ('-modified_at',)
 
+    def get_other_user(self, current_user):
+        return self.members.exclude(id=current_user.id).first()
+
 class ConversationMessage(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
     content = models.TextField()
