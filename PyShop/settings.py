@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'conversation',
     'dashboard',
     'item',
+    'PyShop',
 ]
 
 MIDDLEWARE = [
