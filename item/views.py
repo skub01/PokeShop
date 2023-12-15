@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Item, Category
 from .forms import NewItemForm, EditItemForm
@@ -17,6 +18,17 @@ def items(request):
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
+    items_per_page = 12
+    paginator = Paginator(items, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        items = paginator.page(page)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+    except EmptyPage:
+        items = paginator.page(paginator.num_pages)
+
     return render(request, 'item/items.html', {
         'items': items,
         'query': query,
@@ -28,9 +40,21 @@ def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     related_items = Item.objects.filter(category=item.category, sold=False).exclude(pk=pk)[0:3]
 
+    rarity_info = {
+        'Rare Holo': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+        'Rare Holo GX': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+        'Rare Holo V': {'style': 'text-purple-600 font-bold', 'symbol': '★'},
+        'Rare': {'style': 'text-red-500 font-bold', 'symbol': '★'},
+        'Common': {'style': 'text-gray-500 font-bold', 'symbol': '○'},
+        'Uncommon': {'style': 'text-blue-500 font-bold', 'symbol': '☆'},
+            }
+    
+    rarity = rarity_info.get(item.category, None)
+
     return render(request, 'item/detail.html', {
         'item': item,
         'related_items': related_items,
+        'rarity': rarity,
     })
 
 @login_required

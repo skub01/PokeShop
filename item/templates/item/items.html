@@ -51,6 +51,19 @@
                 </div>
                 {% endfor %}
               </div>
+              <div class="mt-6 flex justify-center">
+                <span>
+                    {% if items.has_previous %}
+                        <a href="?page=1" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">&laquo; first</a>
+                        <a href="?page={{ items.previous_page_number }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">previous</a>
+                    {% endif %}
+                    <span class="mr-2">Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
+                    {% if items.has_next %}
+                        <a href="?page={{ items.next_page_number }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">next</a>
+                        <a href="?page={{ items.paginator.num_pages }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">last &raquo;</a>
+                    {% endif %}
+                </span>
+              </div>
         </div>
 
     </div>
