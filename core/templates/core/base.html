@@ -35,9 +35,7 @@
 
     <footer class="py-6 px-6 flex justify-between bg-gray-800">
         <div class="w-2/3 pr-10">
-            <h3 class="mb-5 font-semibold text-gray-400">About</h3>
-
-            <p class="text-lg text-gray-500">This is a Pokémon trading card e-commerce website developed with Python, Django, and Tailwind.<br>
+            <p class="text-lg mt-12 text-gray-500">PokéShop is a Pokémon trading card e-commerce website developed with Python, Django, and Tailwind.<br>
             Card data sourced from the <a href="https://pokemontcg.io/">Pokémon TCG API.</a></p>
         </div>
         
@@ -45,7 +43,7 @@
             <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
 
             <ul class="space-y-2">
-                <li><a href="#" class="text-lg text-blue-500 hover:text-blue-700">About</a></li>
+                <li><a href="{% url 'core:about' %}" class="text-lg text-blue-500 hover:text-blue-700">About</a></li>
                 <li><a href="{% url 'core:contact' %}" class="text-lg text-blue-500 hover:text-blue-700">Contact Us</a></li>
                 <li><a href="{% url 'core:privacy' %}" class="text-lg text-blue-500 hover:text-blue-700">Privacy</a></li>
                 <li><a href="{% url 'core:terms' %}" class="text-lg text-blue-500 hover:text-blue-700">Terms</a></li>
