@@ -57,7 +57,11 @@
                         <a href="?page=1" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">&laquo; first</a>
                         <a href="?page={{ items.previous_page_number }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">previous</a>
                     {% endif %}
+                    {% if items %}
                     <span class="mr-2">Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
+                    {% else %}
+                    <p class="text-gray-800 mt-10 text-lg">No results found! Try searching for a different keyword or resetting the filter.</p>
+                    {% endif %}
                     {% if items.has_next %}
                         <a href="?page={{ items.next_page_number }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">next</a>
                         <a href="?page={{ items.paginator.num_pages }}" class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white">last &raquo;</a>
