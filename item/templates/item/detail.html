@@ -33,11 +33,11 @@
         {% if request.user == item.created_by %}
             <div class="mt-6 p-6 bg-white rounded-xl">
               <p>This is your listing.</p>
-              <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-xl">Edit Listing</a>
-              <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl">Delete Listing</a>
+              <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-2 text-lg font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-xl">Edit Listing</a>
+              <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-2 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl">Delete Listing</a>
             </div>
         {% else %}
-            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Contact Seller</a>
+            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Contact Seller</a>
         {% endif %}
       </div>
 </div>
@@ -49,7 +49,7 @@
       {% for item in related_items %}
       <div class="flex justify-center">
         <a href="{% url 'item:detail' item.id %}">
-          <div>
+          <div class="transform transition-transform duration-300 hover:scale-105">
             <img src="{{ item.image }}" class="h-64 rounded-t-xl" />
           </div>
   
