@@ -21,14 +21,17 @@
         {% if item.description %}
             <p class="text-gray-700 mb-6">{{ item.description }}</p>
         {% endif %}
-        {% if item.category %}
-          <p class="{{ rarity.style }} mb-6">
-            <p>Rarity: {{ rarity }}</p>
-            {{ rarity.symbol }} {{ item.category }}
-          </p>
+        {% if 'Rare' in item.category|safe %}
+            <p class="text-purple-600 font-bold mb-6">★ {{ item.category }}</p>
+        {% elif 'Uncommon' in item.category|safe %}
+            <p class="text-blue-500 font-bold mb-6">☆ {{ item.category }}</p>
+        {% elif 'Promo' in item.category|safe %}
+            <p class="text-orange-500 font-bold mb-6">☆ {{ item.category }}</p>
+        {% else %}
+            <p class="text-gray-500 font-bold mb-6">○ {{ item.category }}</p>
         {% endif %}
-        <p class="text-gray-500"><strong>${{ item.price|floatformat:2  }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by }}</p>
+        <p class="text-gray-500 text-lg"><strong>${{ item.price|floatformat:2  }}</p>
+        <p class="text-gray-500">Seller: <strong>{{ item.created_by }}</strong></p>
 
         {% if request.user == item.created_by %}
             <div class="mt-6 p-6 bg-white rounded-xl">
@@ -43,7 +46,7 @@
 </div>
 
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Related Items</h2>
+    <h2 class="mb-12 text-2xl text-center">Related Cards</h2>
   
     <div class="grid grid-cols-3 gap-3">
       {% for item in related_items %}
