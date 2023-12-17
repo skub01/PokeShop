@@ -90,7 +90,8 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgres://admin:aN2UIY5bXlUymr6hjJain0LNGprjJqG6@dpg-clv4176g1b2c73cdb1ig-a.ohio-postgres.render.com/pokeshopdb")
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
