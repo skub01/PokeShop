@@ -15,7 +15,7 @@
       <a href="{% url 'item:detail' item.id %}">
         <div>
           {% if "http" not in item.image %}
-            <img src="{{ item.image.url }}" class="h-96 rounded-xl">
+            <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="h-96 rounded-xl">
           {% else %}
             <img src="{{ item.image }}" class="h-96 rounded-xl">
           {% endif %}
