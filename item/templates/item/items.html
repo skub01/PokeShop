@@ -36,7 +36,7 @@
                 <div class="flex justify-center mt-4 mb-4">
                   <a href="{% url 'item:detail' item.id %}">
                     <div class="transform transition-transform duration-300 hover:scale-105">
-                        {% if not item.image.startswith("http") %}
+                        {% if item.image and not "http" in item.image %}
                           <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
                       {% else %}
                           <img src="{{ item.image }}" class="rounded-xl h-96">
