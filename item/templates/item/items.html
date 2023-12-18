@@ -36,11 +36,11 @@
                 <div class="flex justify-center mt-4 mb-4">
                   <a href="{% url 'item:detail' item.id %}">
                     <div class="transform transition-transform duration-300 hover:scale-105">
-                        {% if item.image and not str(item.image).startswith("http") %}
+                        {% if item.image.url and not item.image.url.startswith("http") %}
                           <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
-                      {% else %}
+                        {% else %}
                           <img src="{{ item.image }}" class="rounded-xl h-96">
-                      {% endif %}
+                        {% endif %}
                     </div>
             
                     <div class="p-6 bg-white rounded-b-xl">
