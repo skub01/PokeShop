@@ -14,18 +14,19 @@
         <a href="/">
             <img src="{% get_media_prefix %}Logo.png" alt="PyShop Logo" class="h-10">          
         </a>
-        <div class="mt-4 sm:mt-0 space-x-6 flex flex-wrap">
-            <a href="{% url 'item:new' %}" class="text-lg font-semibold hover:text-gray-500">List a Card</a>
-            <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
-
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'conversation:inbox' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Inbox</a>
-            <a href="{% url 'dashboard:index' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
-            
-            {% else %}
-                <a href="{% url 'core:signup' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Sign Up</a>
-                <a href="{% url 'core:login' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
-            {% endif %}
+        <div class="mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:space-x-6 flex flex-wrap">
+            <div class="sm:w-1/2 mb-4 sm:mb-0">
+                <a href="{% url 'item:new' %}" class="text-lg font-semibold hover:text-gray-500">List a Card</a>
+                <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
+            </div>
+            <div class="sm:w-1/2 space-x-6">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'conversation:inbox' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Inbox</a>
+                    <a href="{% url 'dashboard:index' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+                {% else %}
+                    <a href="{% url 'core:signup' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Sign Up</a>
+                    <a href="{% url 'core:login' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
+                {% endif %}
         </div>
     </nav>
     <div class="px-6 py-6">
