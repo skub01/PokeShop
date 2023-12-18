@@ -7,7 +7,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
   <div class="sm:col-span-2 md:col-span-3 lg:col-span-3 flex justify-center">
     {% if "http" not in item.image %}
-        <img src="{{ item.image.url }}" class="rounded-xl h-96">
+        <img src="{% get_media_prefix %}{{ item.image.url }}" class="rounded-xl h-96">
     {% else %}
         <img src="{{ item.image }}" class="rounded-xl">
     {% endif %}
