@@ -3,7 +3,7 @@
 {% block title %}Browse Cards{% endblock %}
 
 {% block content %}
-    <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
+    <div class="pb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-100">
         <div class="col-span-1 m-2">
             <form method="GET" action="{% url 'item:items' %}">
                 <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="What are you looking for?">
@@ -30,19 +30,17 @@
             </ul>
         </div>
 
-        <div class="col-span-3">
-            <div class="grid grid-cols-3 gap-3">
+        <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
                 {% for item in items %}
                 <div class="flex justify-center mt-4 mb-4">
                   <a href="{% url 'item:detail' item.id %}">
                     <div class="transform transition-transform duration-300 hover:scale-105">
-                        {% if "http" not in item.image.url %}
-                            {% if item.image.url %}
-                                <img src="{% get_media_prefix %}{{ item.image.url }}" class="rounded-xl h-96">
-                            {% endif %}
-                        {% else %}
-                            <img src="{{ item.image }}" class="rounded-xl h-96">
-                        {% endif %}
+                      {% if "http" not in item.image %}
+                          <img src="{{ item.image.url }}" class="rounded-xl h-96">
+                      {% else %}
+                          <img src="{{ item.image }}" class="rounded-xl h-96">
+                      {% endif %}
                     </div>
             
                     <div class="p-6 bg-white rounded-b-xl">
