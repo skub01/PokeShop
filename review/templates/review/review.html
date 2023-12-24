@@ -20,6 +20,8 @@
   {% else %}
     <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
   {% endif %}
+  <a href="{% url 'review:new' username=username %}" class="text-lg font-semibold hover:text-gray-500 mt-2">Leave a review</a>
 </div>
 
 {% endblock %}
+
