@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Review
+from django.contrib.auth.models import User
 
-def seller_info(request):
-    reviews_received = Review.objects.filter(seller=request.user)
+def user_reviews(request, username):
+    seller = get_object_or_404(User, username=username)
+    reviews = Review.objects.filter(seller=seller)
 
-    return render(request, 'dashboard/seller_info.html', {
-        'reviews_received': reviews_received,
-    })
+    return render(request, 'review.html', {'reviews': reviews, 'username': username})

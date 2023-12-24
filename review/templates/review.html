@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %} 
+{% block title %} {{username}} {% endblock %} 
+
+{% block content %}
+<h1 class="mb-6 text-3xl">{{username}}</h1>
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+  {% if reviews %}
+    <h2 class="mb-12 text-2xl text-center">User Reviews</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
+      {% for review in reviews %}
+        <div class="flex justify-center">
+          <div>
+            <h2>{{ review.title }}</h2>
+            <p>{{ review.description }}</p>
+            <p>Reviewed by: {{ review.reviewer.username }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
+  {% endif %}
+</div>
+
+{% endblock %}
