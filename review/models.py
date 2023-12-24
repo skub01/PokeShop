@@ -1,18 +1,22 @@
 from django.contrib.auth.models import User
 from django.db import models
-
-class Rating(models.Model):
-    name = models.CharField(max_length=10)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name_plural = 'Ratings'
-
-    def __str__(self):
-        return self.name
     
 class Review(models.Model):
-    rating = models.ForeignKey(Rating, related_name='reviews', on_delete=models.CASCADE)
+    ONE_STAR = 1
+    TWO_STARS = 2
+    THREE_STARS = 3
+    FOUR_STARS = 4
+    FIVE_STARS = 5
+
+    STAR_CHOICES = [
+        (ONE_STAR, '1 star'),
+        (TWO_STARS, '2 stars'),
+        (THREE_STARS, '3 stars'),
+        (FOUR_STARS, '4 stars'),
+        (FIVE_STARS, '5 stars'),
+    ]
+
+    rating = models.IntegerField(choices=STAR_CHOICES)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
