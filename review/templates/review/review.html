@@ -1,27 +1,60 @@
 {% extends 'core/base.html' %} 
-{% block title %} {{username}} {% endblock %} 
+{% block title %} {{ username }} {% endblock %} 
 
 {% block content %}
-<h1 class="mb-6 text-3xl">{{username}}</h1>
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  {% if reviews %}
-    <h2 class="mb-12 text-2xl text-center">User Reviews</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
-      {% for review in reviews %}
-        <div class="flex justify-center">
-          <div>
-            <h2>{{ review.title }}</h2>
-            <p>{{ review.description }}</p>
-            <p>Reviewed by: {{ review.reviewer.username }}</p>
+  <h1 class="mb-6 text-3xl">{{ username }}</h1>
+  <h1 class="mb-6 text-xl">Member since {{ user.date_joined|date:"F Y" }}</h1>
+
+  <div class="flex">
+    <div class="flex-1">
+      <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        {% if reviews %}
+          <h2 class="mb-12 text-2xl text-center">User Reviews</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
+            {% for review in reviews %}
+              <div class="flex justify-center mb-3 bg-white rounded-xl p-3">
+                <div>
+                  <h2 class="text-xl"><strong>{{ review.title }}</strong></h2>
+                  <p>{{ review.description }}</p>
+                  <p class="font-bold text-blue-600">Reviewed by {{ review.reviewer.username }}</p>
+                </div>
+              </div>
+            {% endfor %}
           </div>
-        </div>
-      {% endfor %}
+        {% else %}
+          <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
+        {% endif %}
+
+        <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
+      </div>
     </div>
-  {% else %}
-    <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
-  {% endif %}
-  <a href="{% url 'review:new' username=username %}" class="text-lg font-semibold hover:text-gray-500 mt-2">Leave a review</a>
-</div>
 
+    <div class="flex-1">
+      {% if items %}
+        <h2 class="mb-12 text-2xl text-center">{{ username }}'s active listings</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
+          {% for item in items|slice:":3" %}
+            <div class="flex justify-center">
+              <a href="{% url 'item:detail' item.id %}">
+                <div>
+                  {% if item.image and item.created_by_id != 1 %}
+                    <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-48">
+                  {% else %}
+                    <img src="{{ item.image }}" class="h-48 rounded-xl">
+                  {% endif %}
+                </div>
+                <div class="p-2 bg-white rounded-b-xl">
+                  <h2 class="text-xl">{{ item.name }}</h2>
+                  <p class="text-gray-500">${{ item.price|floatformat:2 }}</p>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <h2 class="mb-12 text-2xl text-center">{{ username }} has no active listings.</h2>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
-

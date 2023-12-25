@@ -2,15 +2,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-
+from item.models import Item
 from .models import User, Review
 from .forms import NewReviewForm, EditReviewForm
 
 def user_reviews(request, username):
     seller = get_object_or_404(User, username=username)
     reviews = Review.objects.filter(seller=seller)
+    items = Item.objects.filter(created_by=seller)
 
-    return render(request, 'review/review.html', {'reviews': reviews, 'username': username})
+    return render(request, 'review/review.html', {
+        'reviews': reviews, 
+        'username': username,
+        'items': items})
 
 
 @login_required
