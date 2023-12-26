@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'dashboard',
     'item',
     'PyShop',
+    'review',
 ]
 
 MIDDLEWARE = [
