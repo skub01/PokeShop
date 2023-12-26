@@ -18,8 +18,8 @@ class Review(models.Model):
     ]
 
     rating = models.IntegerField(choices=STAR_CHOICES)
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=50)
+    description = models.TextField(max_length=250, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     reviewer = models.ForeignKey(User, related_name='reviews_written', on_delete=models.CASCADE)
     seller = models.ForeignKey(User, related_name='reviews_received', on_delete=models.CASCADE)

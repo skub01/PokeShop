@@ -4,8 +4,6 @@
 {% block content %}
 <h1 class="mb-6 text-3xl">{{ username }}<p class="text-xl" style="display: inline;"> ( ⭐ <strong>{{ average_rating }}</strong> / 5 )<p></h1>
   <h1 class="mb-6 text-xl">Member since {{ user.date_joined|date:"F Y" }}</h1>
-  <p>Seller: {{ seller }}</p>
-  <p>Rating: {{ average_rating }}</p>
 
   <div class="flex">
     <div class="flex-1">
@@ -15,7 +13,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
             {% for review in reviews %}
               <div class="flex mb-3 bg-white rounded-xl p-3">
-                <div>
+                <div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">
                   <h2 class="text-xl"><strong>{{ review.title }}</strong></h2>
                   <p>{{ review.display_stars }}</p>
                   <p>{{ review.description }}</p>
