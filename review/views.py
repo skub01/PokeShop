@@ -5,17 +5,22 @@ from django.urls import reverse
 from item.models import Item
 from .models import User, Review
 from .forms import NewReviewForm, EditReviewForm
+from django.db.models import Avg
+
 
 def user_reviews(request, username):
     seller = get_object_or_404(User, username=username)
     reviews = Review.objects.filter(seller=seller)
     items = Item.objects.filter(created_by=seller)
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+    average_rating = round(average_rating, 2) if average_rating is not None else 0.0
 
     return render(request, 'review/review.html', {
         'reviews': reviews, 
         'username': username,
-        'items': items})
-
+        'items': items,
+        'average_rating': average_rating,
+    })
 
 @login_required
 def new(request, username):

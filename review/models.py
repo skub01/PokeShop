@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Avg
     
 class Review(models.Model):
     ONE_STAR = 1
@@ -25,3 +26,13 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.reviewer.username} for {self.seller.username}"
+    
+    def display_stars(self):
+        full_stars = '★' * self.rating
+        empty_stars = '☆' * (5 - self.rating)
+        return full_stars + empty_stars
+    
+    def average_rating(self):
+        seller_reviews = Review.objects.filter(seller=self.seller)
+        average = seller_reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(average, 2) if average is not None else 0.0
