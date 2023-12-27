@@ -30,7 +30,7 @@
           {% endif %}
         {% endif %}
         
-        {% if request.user != user %}
+        {% if request.user != user and not has_left_review %}
           <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
         {% endif %}
        </div>
