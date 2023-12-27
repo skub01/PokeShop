@@ -31,6 +31,11 @@
             {% else %}
                 <a href="{% url 'core:signup' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Sign Up</a>
                 <a href="{% url 'core:login' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
+                <a href="{% url 'core:login' %}">
+                    <div class="rounded-xl overflow-hidden">
+                        <img src="https://live.staticflickr.com/65535/53423471177_5cd8aa464c_m.jpg" alt="Your Profile" class="h-10">
+                    </div>
+                </a>
             {% endif %}
         </div>
     </nav>
