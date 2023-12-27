@@ -17,22 +17,34 @@
                   <h2 class="text-xl"><strong>{{ review.title }}</strong></h2>
                   <p>{{ review.display_stars }}</p>
                   <p>{{ review.description }}</p>
-                  <p class="font-bold text-blue-600">Reviewed by {{ review.reviewer.username }}</p>
+                  <p class="font-bold text-blue-600">Reviewed by <a href="{% url 'review:user_reviews' review.reviewer_id %}">{{ review.reviewer.username }}</a></p>
                 </div>
               </div>
             {% endfor %}
           </div>
         {% else %}
-          <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
+          {% if request.user != user %}
+            <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
+          {% else %}
+            <h2 class="mb-12 text-2xl text-center">You currently have no reviews.</h2>
+          {% endif %}
         {% endif %}
-
-        <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
-      </div>
+        
+        {% if request.user != user %}
+          <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
+        {% endif %}
+       </div>
     </div>
 
     <div class="flex-1">
       {% if items %}
-        <h2 class="mb-12 text-2xl text-center">{{ username }}'s active listings</h2>
+        <h2 class="mb-12 text-2xl text-center">
+          {% if request.user != user %}
+            {{ username }}'s active listings
+          {% else %}
+            Your listings
+          {% endif %}
+        </h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
           {% for item in items|slice:":3" %}
@@ -53,8 +65,14 @@
             </div>
           {% endfor %}
         </div>
-      {% else %}
-        <h2 class="mb-12 text-2xl text-center">{{ username }} has no active listings.</h2>
+        {% else %}
+        <h2 class="mb-12 text-2xl text-center">
+          {% if request.user != user %}
+            {{ username }} has no active listings.
+          {% else %}
+            You have no active listings.
+          {% endif %}
+        </h2>
       {% endif %}
     </div>
   </div>
