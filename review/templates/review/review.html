@@ -36,7 +36,7 @@
        </div>
     </div>
 
-    <div class="flex-1">
+    <div class="flex-1 m-2">
       {% if items %}
         <h2 class="mb-12 text-2xl text-center">
           {% if request.user.username != username %}
@@ -47,14 +47,14 @@
         </h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
-          {% for item in items|slice:":3" %}
+          {% for item in items|slice:":6" %}
             <div class="flex justify-center">
               <a href="{% url 'item:detail' item.id %}">
                 <div>
                   {% if item.image and item.created_by_id != 1 %}
                     <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-48">
                   {% else %}
-                    <img src="{{ item.image }}" class="h-48 rounded-xl">
+                    <img src="{{ item.image }}" class="w-50 mt-4 rounded-xl">
                   {% endif %}
                 </div>
                 <div class="p-2 bg-white rounded-b-xl">

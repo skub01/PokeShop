@@ -7,12 +7,14 @@ from .models import User, Review
 from django.contrib.auth import get_user_model
 from .forms import NewReviewForm, EditReviewForm
 from django.db.models import Avg
+from random import shuffle
 
 
 def user_reviews(request, username):
     seller = get_object_or_404(User, username=username)
     reviews = Review.objects.filter(seller=seller)
-    items = Item.objects.filter(created_by=seller)
+    items = list(Item.objects.filter(created_by=seller))
+    shuffle(items)
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     average_rating = round(average_rating, 2) if average_rating is not None else 0.0
     user_profile = get_user_model().objects.get(username=username)
