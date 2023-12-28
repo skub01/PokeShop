@@ -14,7 +14,7 @@
     <div class="flex justify-center">
       <a href="{% url 'item:detail' item.id %}">
         <div>
-          {% if item.image and item.created_by_id != 1  %}
+          {% if item.image and item.created_by_id != 1 and item.created_by_id != 2 and item.created_by_id != 3 %}
             <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
           {% else %}
             <img src="{{ item.image }}" class="h-96 rounded-xl">

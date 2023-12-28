@@ -13,7 +13,7 @@
             <a href="{% url 'conversation:detail' conversation.id %}">
                 <div class="p-6 flex bg-gray-200 mb-5 rounded-xl">
                     <div class="pr-6">
-                        {% if conversation.item.image and conversation.item.created_by_id != 1  %}
+                        {% if conversation.item.image and conversation.item.created_by_id != 1 and item.created_by_id != 2 and item.created_by_id != 3 %}
                           <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
                         {% else %}
                             <img src="{{ conversation.item.image }}" class="w-20 rounded-xl">
