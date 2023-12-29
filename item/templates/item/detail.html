@@ -30,7 +30,7 @@
         {% else %}
             <p class="text-gray-500 font-bold mb-6">○ {{ item.category }}</p>
         {% endif %}
-        <p class="text-gray-500 text-lg"><strong>${{ item.price|floatformat:2  }}</p>
+        <p class="text-black text-lg"><strong>${{ item.price|floatformat:2  }}</p>
         <p class="text-gray-500">Seller: 
         <a href="{% url 'review:user_reviews' item.created_by %}" class="text-blue-700"><strong>{{ item.created_by }}</strong></a></p>
 
@@ -59,7 +59,7 @@
   
           <div class="p-6 bg-white rounded-b-xl">
             <h2 class="text-2xl">{{ item.name }}</h2>
-            <p class="text-gray-500">${{ item.price|floatformat:2  }}</p>
+            <p class="text-black">${{ item.price|floatformat:2  }}</p>
           </div>
         </a>
       </div>
