@@ -21,16 +21,16 @@
             <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500 mt-2">Browse</a>
 
             {% if request.user.is_authenticated %}
-            <a href="{% url 'conversation:inbox' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Inbox</a>
-            <a href="{% url 'dashboard:index' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+            <a href="{% url 'conversation:inbox' %}" class="px-5 py-1 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Inbox</a>
+            <a href="{% url 'dashboard:index' %}" class="px-5 py-1 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
             <a href="{% url 'review:user_reviews' username=request.user.username %}">
                 <div class="rounded-xl overflow-hidden">
                     <img src="https://live.staticflickr.com/65535/53423471177_5cd8aa464c_m.jpg" alt="Your Profile" class="h-10">
                 </div>
             </a>
             {% else %}
-                <a href="{% url 'core:signup' %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Sign Up</a>
-                <a href="{% url 'core:login' %}" class="px-6 py-2 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
+                <a href="{% url 'core:signup' %}" class="px-6 py-1 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Sign Up</a>
+                <a href="{% url 'core:login' %}" class="px-6 py-1 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
                 <a href="{% url 'core:login' %}">
                     <div class="rounded-xl overflow-hidden">
                         <img src="https://live.staticflickr.com/65535/53423471177_5cd8aa464c_m.jpg" alt="Your Profile" class="h-10">
