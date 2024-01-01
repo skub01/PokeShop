@@ -18,7 +18,10 @@ def user_reviews(request, username):
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     average_rating = round(average_rating, 2) if average_rating is not None else 0.0
     user_profile = get_user_model().objects.get(username=username)
-    has_left_review = Review.objects.filter(reviewer=request.user, seller=user_profile).exists()
+    
+    has_left_review = False
+    if request.user.is_authenticated:
+        has_left_review = Review.objects.filter(reviewer=request.user, seller=user_profile).exists()
 
     return render(request, 'review/review.html', {
         'reviews': reviews, 
