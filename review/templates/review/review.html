@@ -23,14 +23,14 @@
             {% endfor %}
           </div>
         {% else %}
-          {% if request.user.username != username %}
-            <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
-          {% else %}
+          {% if request.user.is_authenticated and request.user.username == username %}
             <h2 class="mb-12 text-2xl text-center">You currently have no reviews.</h2>
+          {% else %}
+            <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
           {% endif %}
         {% endif %}
         
-        {% if request.user.username != username and not has_left_review %}
+        {% if request.user.is_authenticated and request.user.username != username and not has_left_review %}
           <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
         {% endif %}
        </div>
@@ -39,10 +39,10 @@
     <div class="flex-1 m-2">
       {% if items %}
         <h2 class="mb-12 text-2xl text-center">
-          {% if request.user.username != username %}
-            {{ username }}'s active listings
-          {% else %}
+          {% if request.user.is_authenticated and request.user.username == username %}
             Your listings
+          {% else %}
+            {{ username }}'s active listings
           {% endif %}
         </h2>
 
@@ -67,10 +67,10 @@
         </div>
         {% else %}
         <h2 class="mb-12 text-2xl text-center">
-          {% if request.user.username != username %}
-            {{ username }} has no active listings.
-          {% else %}
+          {% if request.user.is_authenticated and request.user.username == username %}
             You have no active listings.
+          {% else %}
+            {{ username }} has no active listings.
           {% endif %}
         </h2>
       {% endif %}
