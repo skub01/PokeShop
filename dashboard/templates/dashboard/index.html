@@ -13,12 +13,12 @@
     {% for item in items %}
     <div class="relative">
         <div class="flex justify-center">
-          <a href="{% url 'item:detail' item.id %}">
               <div class="relative">
                 <div class="absolute top-1 right-6 -mt-6 -mr-6">
                   <a href="{% url 'item:edit' item.id %}" class="px-6 py-1 text-lg font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-xl">Edit</a>
                   <a href="#" class="px-4 py-1 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl" onclick="confirmDelete('{{ item.id }}')">X</a>
                 </div>
+                <a href="{% url 'item:detail' item.id %}">
               {% if item.image and item.created_by_id != 1 and item.created_by_id != 2 and item.created_by_id != 3 %}
                 <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
               {% else %}
