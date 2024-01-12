@@ -3,6 +3,7 @@ content %}
 <div
   class="pb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-100">
   <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-3">
+    {% if cart_items %}
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
       {% with total_price=0 %} {% for item in cart_items %}
@@ -30,12 +31,15 @@ content %}
               {% csrf_token %}
               <button type="submit" class="text-red-500">Delete</button>
             </form>
-            
+
           </div>
         </a>
       </div>
       {% with total_price=total_price+item.price %} {% endfor %} {% endwith %}
     </div>
+    {% else %}
+        <p class="text-center text-gray-500">Your cart is empty. <a href="{% url 'home' %}" class="text-blue-500">Continue shopping</a>.</p>
+    {% endif %}
   </div>
   <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-3">
     <div class="p-6 bg-white rounded-xl mt-4">
