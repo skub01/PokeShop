@@ -27,7 +27,7 @@ content %}
             <label for="quantity">Quantity:</label>
             <input type="number" name="quantity" value="{{ item.cartitem.quantity }}" min="1">
 
-            <form method="post" action="{% url 'cart:delete_item' item.cartitem.id %}">
+            <form method="post" action="{% url 'cart:delete_item' item.cartitem.id %}" onsubmit="return confirm('Delete this item?')">
               {% csrf_token %}
               <button type="submit" class="text-red-500">Delete</button>
             </form>
