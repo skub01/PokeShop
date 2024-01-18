@@ -21,11 +21,11 @@
         <h2 class="text-2xl">Order Summary</h2>
         <p class="text-gray-500">Total: ${{ total_price|floatformat:2 }}</p>
   
-        <label for="name" class="block mt-4">Name</label>
-        <input type="text" name="name" required class="border p-2 w-full">
+        <label for="name" class="block mt-4">Name:</label>
+        <input type="text" id="name" name="name" required class="border p-2 w-full">
   
-        <label for="address" class="block mt-4">Mailing Address</label>
-        <textarea name="address" required rows="4" class="border p-2 w-full"></textarea>
+        <label for="address" class="block mt-4">Mailing Address:</label>
+        <textarea id="address" name="address" required rows="4" class="border p-2 w-full"></textarea>
       </div>
   
       <div class="flex justify-between mt-6">
