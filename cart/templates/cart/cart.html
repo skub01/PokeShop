@@ -38,7 +38,11 @@ content %}
       {% with total_price=total_price+item.price %} {% endfor %} {% endwith %}
     </div>
     {% else %}
-        <p class="text-center text-gray-500">Your cart is empty. <a href="{% url 'home' %}" class="text-blue-500">Continue shopping</a>.</p>
+        <p class="text-center text-gray-500">Your cart is empty. 
+          <a href="{% url 'home' %}" class="text-blue-500 hover:underline focus:outline-none focus:underline transition duration-150 ease-in-out">
+            Continue shopping
+          </a>
+        </p>
     {% endif %}
   </div>
   <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-3">
