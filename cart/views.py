@@ -14,3 +14,15 @@ def delete_item(request, item_id):
     item.delete()
     messages.success(request, 'Item removed from cart.')
     return redirect('cart:view_cart')
+
+def add_to_cart(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(cart=user_cart, item=item)
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('cart:view_cart')
