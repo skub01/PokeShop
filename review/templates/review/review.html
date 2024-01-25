@@ -18,7 +18,7 @@
                   <p>{{ review.display_stars }}</p>
                   <p>{{ review.description }}</p>
                   <p class="font-bold text-blue-600">Reviewed by <a href="{% url 'review:user_reviews' review.reviewer %}">{{ review.reviewer.username }}</a>
-                    <span style="font-style: italic; display: inline-block;">{{ review.created_at }}</span></p>
+                    <span style="font-style: italic; display: inline-block;">{{ review.created_at|date:"M Y" }}</span></p>
                 </div>
               </div>
             {% endfor %}
