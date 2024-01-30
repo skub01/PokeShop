@@ -26,3 +26,12 @@ def add_to_cart(request, item_id):
         cart_item.save()
 
     return redirect('cart:view_cart')
+
+def process_payment(request):
+    user_cart = Cart.objects.get(user=request.user)
+    cart_items = user_cart.items.all()
+    total_price = sum(item.item.price * item.quantity for item in cart_items)
+
+    user_cart.items.all().delete()
+
+    return render(request, 'checkout/order.html', {'ordered_items': cart_items, 'total_price': total_price})
