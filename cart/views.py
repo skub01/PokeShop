@@ -50,3 +50,5 @@ def order(request, order_id):
         'ordered_items': ordered_items,
         'total_price': total_price,
     }
+    
+    return render(request, 'checkout/order.html', context)
