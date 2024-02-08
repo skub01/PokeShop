@@ -1,73 +1,102 @@
-{% extends 'core/base.html' %}
-{% load static %}
-
-{% block title %}{{ item.name }}{% endblock %}
-
-{% block content %}
+{% extends 'core/base.html' %} {% load static %} {% block title %}{{ item.name
+}}{% endblock %} {% block content %}
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
   <div class="sm:col-span-2 md:col-span-3 lg:col-span-3 flex justify-center">
     {% if item.image and item.created_by_id not in [1, 2, 3] %}
-      <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
+    <img
+      src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg"
+      class="rounded-xl h-96"
+    />
     {% else %}
-        <img src="{{ item.image }}" class="rounded-xl">
+    <img src="{{ item.image }}" class="rounded-xl" />
     {% endif %}
+  </div>
+
+  <div
+    class="sm:col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gray-100 rounded-xl"
+  >
+    <h1 class="mb-3 text-2xl font-bold">{{ item.name }}</h1>
+    {% if item.series %}
+    <h2 class="mb-10 text-xl">Generation {{ item.series }}</h2>
+    {% endif %} {% if item.description %}
+    <p class="text-gray-700 mb-6">{{ item.description }}</p>
+    {% endif %} {% if 'Rare' in item.category|safe %}
+    <p class="text-purple-600 font-bold mb-6">★ {{ item.category }}</p>
+    {% elif 'Uncommon' in item.category|safe %}
+    <p class="text-blue-500 font-bold mb-6">☆ {{ item.category }}</p>
+    {% elif 'Promo' in item.category|safe %}
+    <p class="text-orange-500 font-bold mb-6">☆ {{ item.category }}</p>
+    {% else %}
+    <p class="text-gray-500 font-bold mb-6">○ {{ item.category }}</p>
+    {% endif %}
+    <p class="text-black text-lg">
+      <strong>${{ item.price|floatformat:2 }}</strong>
+    </p>
+    <p class="text-gray-500">
+      Seller:
+      <a
+        href="{% url 'review:user_reviews' item.created_by %}"
+        class="text-blue-700"
+        ><strong>{{ item.created_by }}</strong></a
+      >
+    </p>
+
+    {% if request.user == item.created_by %}
+    <div class="mt-6 p-6 bg-white rounded-xl">
+      <p>This is your listing.</p>
+      <a
+        href="{% url 'item:edit' item.id %}"
+        class="inline-block mt-6 px-6 py-1 text-lg font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-xl"
+        >Edit Listing</a
+      >
+      <a
+        href="{% url 'item:delete' item.id %}"
+        class="inline-block mt-6 px-6 py-1 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl"
+        >Delete Listing</a
+      >
     </div>
-
-    <div class="sm:col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gray-100 rounded-xl">
-      <h1 class="mb-3 text-2xl font-bold">{{ item.name }}</h1>
-        {% if item.series %}
-            <h2 class="mb-10 text-xl">Generation {{ item.series }}</h2>
-        {% endif %}
-        {% if item.description %}
-            <p class="text-gray-700 mb-6">{{ item.description }}</p>
-        {% endif %}
-        {% if 'Rare' in item.category|safe %}
-            <p class="text-purple-600 font-bold mb-6">★ {{ item.category }}</p>
-        {% elif 'Uncommon' in item.category|safe %}
-            <p class="text-blue-500 font-bold mb-6">☆ {{ item.category }}</p>
-        {% elif 'Promo' in item.category|safe %}
-            <p class="text-orange-500 font-bold mb-6">☆ {{ item.category }}</p>
-        {% else %}
-            <p class="text-gray-500 font-bold mb-6">○ {{ item.category }}</p>
-        {% endif %}
-        <p class="text-black text-lg"><strong>${{ item.price|floatformat:2  }}</p>
-        <p class="text-gray-500">Seller: 
-        <a href="{% url 'review:user_reviews' item.created_by %}" class="text-blue-700"><strong>{{ item.created_by }}</strong></a></p>
-
-        {% if request.user == item.created_by %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-              <p>This is your listing.</p>
-              <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-1 text-lg font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-xl">Edit Listing</a>
-              <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-1 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl">Delete Listing</a>
-            </div>
-        {% else %}
-            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-1 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Contact Seller</a>
-            <form method="post" action="{% url 'cart:add_to_cart' item.id %}">
-              {% csrf_token %}
-              <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded" onclick="alert('Card successfully added to cart!')">Add to Cart</button>
-            </form>
-        {% endif %}
-      </div>
+    {% else %}
+    <a
+      href="{% url 'conversation:new' item.id %}"
+      class="inline-block mt-6 px-6 py-1 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800"
+      >Contact Seller</a
+    >
+    <form method="post" action="{% url 'cart:add_to_cart' item.id %}">
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="bg-green-500 text-white px-4 py-2 rounded"
+        onclick="alert('Card successfully added to cart!')"
+      >
+        Add to Cart
+      </button>
+    </form>
+    {% endif %}
+  </div>
 </div>
 
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Related Cards</h2>
-  
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
-      {% for item in related_items %}
-      <div class="flex justify-center">
-        <a href="{% url 'item:detail' item.id %}">
-          <div class="transform transition-transform duration-300 hover:scale-105">
-            <img src="{{ item.image }}" class="h-64 rounded-t-xl" />
-          </div>
-  
-          <div class="p-6 bg-white rounded-b-xl">
-            <h2 class="text-2xl">{{ item.name }}</h2>
-            <p class="text-black">${{ item.price|floatformat:2  }}</p>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+  <h2 class="mb-12 text-2xl text-center">Related Cards</h2>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3"
+  >
+    {% for item in related_items %}
+    <div class="flex justify-center">
+      <a href="{% url 'item:detail' item.id %}">
+        <div
+          class="transform transition-transform duration-300 hover:scale-105"
+        >
+          <img src="{{ item.image }}" class="h-64 rounded-t-xl" />
+        </div>
+
+        <div class="p-6 bg-white rounded-b-xl">
+          <h2 class="text-2xl">{{ item.name }}</h2>
+          <p class="text-black">${{ item.price|floatformat:2 }}</p>
+        </div>
+      </a>
     </div>
+    {% endfor %}
   </div>
+</div>
 {% endblock %}

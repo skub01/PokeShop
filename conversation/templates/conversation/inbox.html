@@ -1,35 +1,36 @@
-{% extends 'core/base.html' %}
-
-{% block title %}Inbox{% endblock %}
-
-{% block content %}
+{% extends 'core/base.html' %} {% block title %}Inbox{% endblock %} {% block
+content %}
 <h1 class="mb-6 text-3xl">Inbox</h1>
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <div class="space-y-6">
-        {% if  not conversations %}
-            <h2 class="mb-12 text-2xl text-center">No active conversations.</h2>
-        {% endif %}
-        {% for conversation in conversations %}
-            <a href="{% url 'conversation:detail' conversation.id %}">
-                <div class="p-6 flex bg-gray-200 mb-5 rounded-xl">
-                    <div class="pr-6">
-                        {% if conversation.item.image and conversation.item.created_by_id not in [1, 2, 3] %}
-                          <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-96">
-                        {% else %}
-                            <img src="{{ conversation.item.image }}" class="w-20 rounded-xl">
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% for member in conversation.members.all %}
-                            {% if member != request.user %}
-                                <p class="mb-4"><strong>{{member.username}}</strong> | {{conversation.modified_at }}</p>
-                                <p>{{conversation.item.name }} </p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
+  <div class="space-y-6">
+    {% if not conversations %}
+    <h2 class="mb-12 text-2xl text-center">No active conversations.</h2>
+    {% endif %} {% for conversation in conversations %}
+    <a href="{% url 'conversation:detail' conversation.id %}">
+      <div class="p-6 flex bg-gray-200 mb-5 rounded-xl">
+        <div class="pr-6">
+          {% if conversation.item.image and conversation.item.created_by_id not
+          in [1, 2, 3] %}
+          <img
+            src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg"
+            class="rounded-xl h-96"
+          />
+          {% else %}
+          <img src="{{ conversation.item.image }}" class="w-20 rounded-xl" />
+          {% endif %}
+        </div>
+        <div>
+          {% for member in conversation.members.all %} {% if member !=
+          request.user %}
+          <p class="mb-4">
+            <strong>{{member.username}}</strong> | {{conversation.modified_at }}
+          </p>
+          <p>{{conversation.item.name }}</p>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

@@ -1,80 +1,99 @@
-{% extends 'core/base.html' %} 
-{% block title %} {{ username }} {% endblock %} 
-
+{% extends 'core/base.html' %} {% block title %} {{ username }} {% endblock %}
 {% block content %}
-<h1 class="mb-6 text-3xl">{{ username }}<p class="text-xl" style="display: inline;"> ( ⭐ <strong>{{ average_rating }}</strong> / 5 )<p></h1>
-  <h1 class="mb-6 text-xl">Member since {{ user.date_joined|date:"F Y" }}</h1>
+<h1 class="mb-6 text-3xl">
+  {{ username }}
+  <p class="text-xl" style="display: inline">
+    ( ⭐ <strong>{{ average_rating }}</strong> / 5 )
+  </p>
+  <p></p>
+</h1>
+<h1 class="mb-6 text-xl">Member since {{ user.date_joined|date:"F Y" }}</h1>
 
-  <div class="flex">
-    <div class="flex-1">
-      <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        {% if reviews %}
-          <h2 class="mb-12 text-2xl text-center">User Reviews</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
-            {% for review in reviews %}
-              <div class="flex mb-3 bg-white rounded-xl p-3">
-                <div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">
-                  <h2 class="text-xl"><strong>{{ review.title }}</strong></h2>
-                  <p>{{ review.display_stars }}</p>
-                  <p>{{ review.description }}</p>
-                  <p class="font-bold text-blue-600">Reviewed by <a href="{% url 'review:user_reviews' review.reviewer %}">{{ review.reviewer.username }}</a>
-                    <span style="font-style: italic; display: inline-block;">{{ review.created_at|date:"M Y" }}</span></p>
-                </div>
-              </div>
-            {% endfor %}
+<div class="flex">
+  <div class="flex-1">
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+      {% if reviews %}
+      <h2 class="mb-12 text-2xl text-center">User Reviews</h2>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3"
+      >
+        {% for review in reviews %}
+        <div class="flex mb-3 bg-white rounded-xl p-3">
+          <div
+            style="max-width: 300px; overflow: hidden; text-overflow: ellipsis"
+          >
+            <h2 class="text-xl"><strong>{{ review.title }}</strong></h2>
+            <p>{{ review.display_stars }}</p>
+            <p>{{ review.description }}</p>
+            <p class="font-bold text-blue-600">
+              Reviewed by
+              <a href="{% url 'review:user_reviews' review.reviewer %}"
+                >{{ review.reviewer.username }}</a
+              >
+              <span style="font-style: italic; display: inline-block"
+                >{{ review.created_at|date:"M Y" }}</span
+              >
+            </p>
           </div>
-        {% else %}
-          {% if request.user.is_authenticated and request.user.username == username %}
-            <h2 class="mb-12 text-2xl text-center">You currently have no reviews.</h2>
-          {% else %}
-            <h2 class="mb-12 text-2xl text-center">{{ username }} currently has no reviews.</h2>
-          {% endif %}
-        {% endif %}
-        
-        {% if request.user.is_authenticated and request.user.username != username and not has_left_review %}
-          <a href="{% url 'review:new' username=username %}" class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800">Leave a review</a>
-        {% endif %}
-       </div>
-    </div>
-
-    <div class="flex-1 m-2">
-      {% if items %}
-        <h2 class="mb-12 text-2xl text-center">
-          {% if request.user.is_authenticated and request.user.username == username %}
-            Your listings
-          {% else %}
-            {{ username }}'s active listings
-          {% endif %}
-        </h2>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
-          {% for item in items|slice:":6" %}
-            <div class="flex justify-center">
-              <a href="{% url 'item:detail' item.id %}">
-                <div>
-                  {% if item.image and item.created_by_id not in [1, 2, 3] %}
-                    <img src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg" class="rounded-xl h-48">
-                  {% else %}
-                    <img src="{{ item.image }}" class="w-50 mt-4 rounded-xl">
-                  {% endif %}
-                </div>
-                <div class="p-2 bg-white rounded-b-xl">
-                  <h2 class="text-xl">{{ item.name }}</h2>
-                  <p class="text-gray-500">${{ item.price|floatformat:2 }}</p>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
         </div>
-        {% else %}
-        <h2 class="mb-12 text-2xl text-center">
-          {% if request.user.is_authenticated and request.user.username == username %}
-            You have no active listings.
-          {% else %}
-            {{ username }} has no active listings.
-          {% endif %}
-        </h2>
+        {% endfor %}
+      </div>
+      {% else %} {% if request.user.is_authenticated and request.user.username
+      == username %}
+      <h2 class="mb-12 text-2xl text-center">You currently have no reviews.</h2>
+      {% else %}
+      <h2 class="mb-12 text-2xl text-center">
+        {{ username }} currently has no reviews.
+      </h2>
+      {% endif %} {% endif %} {% if request.user.is_authenticated and
+      request.user.username != username and not has_left_review %}
+      <a
+        href="{% url 'review:new' username=username %}"
+        class="px-6 py-2 text-lg font-semibold text-white rounded-xl bg-blue-700 hover:bg-blue-800"
+        >Leave a review</a
+      >
       {% endif %}
     </div>
   </div>
+
+  <div class="flex-1 m-2">
+    {% if items %}
+    <h2 class="mb-12 text-2xl text-center">
+      {% if request.user.is_authenticated and request.user.username == username
+      %} Your listings {% else %} {{ username }}'s active listings {% endif %}
+    </h2>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3"
+    >
+      {% for item in items|slice:":6" %}
+      <div class="flex justify-center">
+        <a href="{% url 'item:detail' item.id %}">
+          <div>
+            {% if item.image and item.created_by_id not in [1, 2, 3] %}
+            <img
+              src="https://archives.bulbagarden.net/media/upload/thumb/1/17/Cardback.jpg/428px-Cardback.jpg"
+              class="rounded-xl h-48"
+            />
+            {% else %}
+            <img src="{{ item.image }}" class="w-50 mt-4 rounded-xl" />
+            {% endif %}
+          </div>
+          <div class="p-2 bg-white rounded-b-xl">
+            <h2 class="text-xl">{{ item.name }}</h2>
+            <p class="text-gray-500">${{ item.price|floatformat:2 }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <h2 class="mb-12 text-2xl text-center">
+      {% if request.user.is_authenticated and request.user.username == username
+      %} You have no active listings. {% else %} {{ username }} has no active
+      listings. {% endif %}
+    </h2>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
