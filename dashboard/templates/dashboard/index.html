@@ -6,7 +6,7 @@ block content %}
   <h2 class="mb-12 text-2xl text-center">Active Listings</h2>
   {% else %}
   <h2 class="mb-12 text-2xl text-center">
-    You currently have no active listings.
+    You currently have no active listings. <a href="{% url 'item:new' %}">List a Card?</a>
   </h2>
   {% endif %}
   <div
