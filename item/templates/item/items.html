@@ -82,13 +82,13 @@ block content %}
         {% if items.has_previous %}
         <a
           href="?page=1"
-          class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white hidden sm:inline-block"
-          >&laquo; first</a
+          class="py-2 px-5 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white hidden sm:inline-block"
+          >&laquo; First</a
         >
         <a
           href="?page={{ items.previous_page_number }}"
-          class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white"
-          >previous</a
+          class="py-2 px-5 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white"
+          >Previous</a
         >
         {% endif %} {% if items %}
         <span class="mr-2"
@@ -102,13 +102,13 @@ block content %}
         {% endif %} {% if items.has_next %}
         <a
           href="?page={{ items.next_page_number }}"
-          class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white"
-          >next</a
+          class="py-2 px-5 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white"
+          >Next</a
         >
         <a
           href="?page={{ items.paginator.num_pages }}"
-          class="py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white hidden sm:inline-block"
-          >last &raquo;</a
+          class="py-2 px-5 text-lg bg-blue-700 hover:bg-blue-800 rounded-xl text-white hidden sm:inline-block"
+          >Last &raquo;</a
         >
         {% endif %}
       </span>
