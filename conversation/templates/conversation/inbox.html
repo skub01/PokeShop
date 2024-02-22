@@ -23,7 +23,7 @@ content %}
           {% for member in conversation.members.all %} {% if member !=
           request.user %}
           <p class="mb-4">
-            <strong>{{member.username}}</strong> | {{conversation.modified_at }}
+            <strong>{{member.username}}</strong> | {{ conversation.modified_at|date:"M. d, Y \a\t g:i a" }}
           </p>
           <p>{{conversation.item.name }}</p>
           {% endif %} {% endfor %}
