@@ -88,7 +88,9 @@
     {% else %}
     <h2 class="mb-12 text-2xl text-center">
       {% if request.user.is_authenticated and request.user.username == username
-      %} You have no active listings. {% else %} {{ username }} has no active
+      %} You have no active listings. 
+      <a href="{% url 'item:new' %}">List a Card</a> 
+      {% else %} {{ username }} has no active
       listings. {% endif %}
     </h2>
     {% endif %}
